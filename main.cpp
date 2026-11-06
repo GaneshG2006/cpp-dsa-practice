@@ -1,46 +1,72 @@
 #include <iostream>
 #include <vector>
+#include <string>
+#include <unordered_map>
 using namespace std;
 
-// Binary Search
-int binarySearch(const vector<int>& arr, int target) {
-    int left = 0;
-    int right = arr.size() - 1;
-
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        if (arr[mid] == target) return mid;
-        if (arr[mid] < target) left = mid + 1;
-        else right = mid - 1;
+// Day 1: Arrays
+int findMax(const vector<int>& arr) {
+    int mx = arr[0];
+    for (int x : arr) {
+        if (x > mx) mx = x;
     }
-
-    return -1;
+    return mx;
 }
 
-// Recursion: factorial
+// Day 2: Strings
+string reverseString(string s) {
+    int left = 0, right = s.size() - 1;
+    while (left < right) {
+        swap(s[left], s[right]);
+        left++;
+        right--;
+    }
+    return s;
+}
+
+// Day 3: Recursion
 int factorial(int n) {
     if (n <= 1) return 1;
     return n * factorial(n - 1);
 }
 
-int main() {
-    vector<int> nums = {2, 5, 8, 12, 16, 23, 38, 45, 57};
-
-    cout << "Array: ";
-    for (int x : nums) {
-        cout << x << " ";
+// Day 4: Sorting
+void bubbleSort(vector<int>& arr) {
+    int n = arr.size();
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) swap(arr[j], arr[j + 1]);
+        }
     }
+}
+
+// Day 5: Hashing
+bool containsDuplicate(const vector<int>& arr) {
+    unordered_map<int, int> freq;
+    for (int x : arr) {
+        if (freq[x] > 0) return true;
+        freq[x]++;
+    }
+    return false;
+}
+
+int main() {
+    vector<int> nums = {3, 7, 2, 9, 5};
+    cout << "Max element: " << findMax(nums) << endl;
+
+    string word = "cpp";
+    cout << "Reversed: " << reverseString(word) << endl;
+
+    cout << "Factorial of 5: " << factorial(5) << endl;
+
+    vector<int> sortMe = {5, 2, 9, 1, 7};
+    bubbleSort(sortMe);
+    cout << "Sorted: ";
+    for (int x : sortMe) cout << x << " ";
     cout << endl;
 
-    int target = 23;
-    int index = binarySearch(nums, target);
-    if (index != -1) {
-        cout << target << " found at index " << index << endl;
-    } else {
-        cout << target << " not found" << endl;
-    }
-
-    cout << "Factorial of 5 = " << factorial(5) << endl;
+    vector<int> dup = {4, 2, 5, 2, 9};
+    cout << "Contains duplicate? " << (containsDuplicate(dup) ? "Yes" : "No") << endl;
 
     return 0;
 }
